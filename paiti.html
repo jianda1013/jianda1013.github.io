@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Painting</title>
-    <script src="./js/aLib.js" type="text/javascript">
-    </script>
-    <link href="./css/prism.css" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/1475972496.js">
-    </script>
+    <script src="./js/aLib.js" type="text/javascript"></script>
+    <script src="https://kit.fontawesome.com/1475972496.js"></script>
     <style type="text/css">
     body,html{widthL100%;height:100%;}
     body{overflow:hidden;}
@@ -90,30 +87,7 @@
        ctx.clearRect(0,0,canvas.width,canvas.height);
     }
 
-    function saveSign(){
-       var canvas=$('#myCanvas');
-
-       var blank = document.createElement('canvas');
-       blank.width = canvas.width;
-       blank.height = canvas.height;
-
-       if (canvas.toDataURL()!=blank.toDataURL()){
-           var dataURL=canvas.toDataURL('image/png');
-           document.rossi.dataURL.value=dataURL;
-
-           new Ajax({
-               url:'aj_saveSign.asp?ts='+new Date().getTime(),
-               method:'post',
-               form:document.rossi,
-               success:function(xmlhttp,form){
-                   form.order.value=xmlhttp.responseText;
-                   window.location='http://audi.tw/pad/?'+xmlhttp.responseText;
-               }
-           });
-       }else{
-           alert('Canvas is blank');
-       }
-    }
+    
 
     window.addEventListener('load',function(){
        var canvas=$('#myCanvas');
@@ -151,11 +125,16 @@
 </head>
 <body>
     <form class="valign-middle" id="rossi" name="rossi">
-        <button class="btn valign-middle" onclick="clearPad();return false;"><i class="fa fa-eraser fa-fw"></i></button> <button class="btn" onclick="saveSign();return false;"><i class="fa fa-floppy-o fa-fw"></i></button> <i class="fa fa-paint-brush"></i> <input class="valign-middle" max="10" min="1" name="pw" onchange="$('#pb').css({width:this.value+'px',height:this.value+'px'});" type="range" value="2"> <span class="inline-block padding-s valign-middle border"></span>
+        <button class="btn valign-middle" onclick="clearPad();return false;">
+            <i class="fa fa-eraser fa-fw"></i>
+        </button>
+        <i class="fa fa-paint-brush"></i>
+        <input class="valign-middle" max="10" min="1" name="pw" onchange="$('#pb').css({width:this.value+'px'});" type="range" value="2">
         <div class="bg-black" id="pb" style="width:2px;height:2px;">
             <span class="inline-block padding-s valign-middle border"></span>
-        </div><input class="valign-middle" name="pc" type="color" value="#000000"> <input class="width-max valign-middle" name="url" type="text"> <input name="order" type="hidden"> <input name="dataURL" type="hidden">
-    </form><img class="hidden" id="canvas" name="canvas">
+        </div>
+        <input class="valign-middle" name="pc" type="color" value="#000000">
+    </form>
     <canvas class="border" height="360" id="myCanvas" width="360"></canvas>
 </body>
 </html>
