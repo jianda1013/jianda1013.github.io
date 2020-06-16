@@ -85,9 +85,7 @@
        var canvas=$('#myCanvas');
        var ctx=canvas.getContext("2d");
        ctx.clearRect(0,0,canvas.width,canvas.height);
-    }
-
-    
+    }    
 
     window.addEventListener('load',function(){
        var canvas=$('#myCanvas');
@@ -103,38 +101,18 @@
        canvas.addEventListener('touchmove',touchMove);
        canvas.addEventListener('touchend',touchEnd);
 
-       var image=window.location.search.substring(1);
-       document.rossi.order.value=image;
-       document.rossi.url.value='http://audi.tw/pad/?'+image;
-
-       new Ajax({
-           url:'aj_readImage.asp?image='+image+'&ts='+new Date().getTime(),
-           method:'get',
-           success:function(xmlhttp){
-               var img=$('img[name="canvas"]');
-               img.src=xmlhttp.responseText;
-               img.onload=function(){
-                   ctx.drawImage(img,0,0,canvas.width,canvas.height);
-               }
-
-           }
-       });
-
     });
     </script>
 </head>
 <body>
-    <form class="valign-middle" id="rossi" name="rossi">
-        <button class="btn valign-middle" onclick="clearPad();return false;">
+    <form id="rossi" name="rossi">
+        <button onclick="clearPad();return false;">
             <i class="fa fa-eraser fa-fw"></i>
         </button>
         <i class="fa fa-paint-brush"></i>
-        <input class="valign-middle" max="10" min="1" name="pw" onchange="$('#pb').css({width:this.value+'px'});" type="range" value="2">
-        <div class="bg-black" id="pb" style="width:2px;height:2px;">
-            <span class="inline-block padding-s valign-middle border"></span>
-        </div>
-        <input class="valign-middle" name="pc" type="color" value="#000000">
+        <input max="10" min="1" name="pw" onchange="$('#pb').css({width:this.value+'px'});" type="range" value="2">
+        <input name="pc" type="color" value="#000000">
     </form>
-    <canvas class="border" height="360" id="myCanvas" width="360"></canvas>
+    <canvas height="360" id="myCanvas" width="360"></canvas>
 </body>
 </html>
