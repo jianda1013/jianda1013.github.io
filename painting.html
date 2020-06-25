@@ -1,118 +1,29 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Painting</title>
-    <script src="./js/aLib.js" type="text/javascript"></script>
-    <script src="https://kit.fontawesome.com/1475972496.js"></script>
-    <style type="text/css">
-    body,html{widthL100%;height:100%;}
-    body{overflow:hidden;}
-    #myCanvas{
-       position:absolute;
-       z-index:300;
-    }
-    </style>
-    <script type="text/javascript">
-    function mouseDown(e){
-       this.draw=true;
-       this.ctx = this.getContext("2d");
-       this.ctx.beginPath();
-       this.ctx.strokeStyle=document.rossi.pc.value;
-       this.ctx.lineWidth=document.rossi.pw.value;
-
-       var o=this;
-       this.offsetX=this.offsetLeft;
-       this.offsetY=this.offsetTop;
-
-       while(o.offsetParent){
-           o=o.offsetParent;
-           this.offsetX+=o.offsetLeft;
-           this.offsetY+=o.offsetTop;
-       }
-       this.ctx.moveTo(e.pageX-this.offsetX,e.pageY-this.offsetY-window.scrollY);
-    }
-
-    function mouseMove(e){
-       if (this.draw){
-           this.ctx.lineTo(e.pageX-this.offsetX,e.pageY-this.offsetY-window.scrollY);
-           this.ctx.stroke();
-       }
-    }
-
-    function mouseUp(e){
-       this.draw=false;
-    }
-
-    function touchStart(e){
-       this.draw=true;
-       this.ctx=this.getContext("2d");
-       this.touch=e.targetTouches[0];
-       this.ctx.beginPath();
-       this.ctx.strokeStyle=document.rossi.pc.value;
-       this.ctx.lineWidth=document.rossi.pw.value;
-
-       var o=this;
-       this.offsetX=this.offsetLeft;
-       this.offsetY=this.offsetTop;
-
-       while(o.offsetParent){
-           o=o.offsetParent;
-           this.offsetX+=o.offsetLeft;
-           this.offsetY+=o.offsetTop;
-       }
-       this.ctx.moveTo(this.touch.pageX-this.offsetX,this.touch.pageY-this.offsetY-window.scrollY);
-       e.preventDefault();
-    }
-
-    function touchMove(e){
-       this.touch=e.targetTouches[0];
-       if (this.draw){
-           this.ctx.lineTo(this.touch.pageX-this.offsetX,this.touch.pageY-this.offsetY-window.scrollY);
-           this.ctx.stroke();
-       }
-       e.preventDefault();
-    }
-
-    function touchEnd(e){
-       this.ctx.stroke();
-       this.draw=false;
-       e.preventDefault();
-    }
-
-    function clearPad(){
-       var canvas=$('#myCanvas');
-       var ctx=canvas.getContext("2d");
-       ctx.clearRect(0,0,canvas.width,canvas.height);
-    }    
-
-    window.addEventListener('load',function(){
-       var canvas=$('#myCanvas');
-       var ctx=canvas.getContext("2d");
-       canvas.width=bWidth;
-       canvas.height=bHeight;
-
-       canvas.addEventListener('mousedown',mouseDown);
-       canvas.addEventListener('mousemove',mouseMove);
-       canvas.addEventListener('mouseup',mouseUp);
-
-       canvas.addEventListener('touchstart',touchStart);
-       canvas.addEventListener('touchmove',touchMove);
-       canvas.addEventListener('touchend',touchEnd);
-
-    });
-    </script>
-</head>
-<body>
-    <form id="rossi" name="rossi">
-        <button onclick="clearPad();return false;">
-            <i class="fa fa-eraser fa-fw"></i>
-        </button>
-        <i class="fa fa-paint-brush"></i>
-        <input max="10" min="1" name="pw" onchange="$('#pb').css({width:this.value+'px'});" type="range" value="2">
-        <input name="pc" type="color" value="#000000">
-    </form>
-    <canvas height="360" id="myCanvas" width="360"></canvas>
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1.0" name="viewport">
+		<title>Painting</title>
+		<script src="./js/painting.js" type="text/javascript"></script>
+		<script src="https://kit.fontawesome.com/1475972496.js"></script>
+		<!-- <link href="css/production.css" rel="stylesheet"> -->
+		<style type="text/css">
+			#myCanvas{
+				position:absolute;
+				z-index:300;
+			}
+		</style>
+    </head>
+    <body>
+		<div>
+			<form id="rossi" name="rossi">
+				<button onclick="clearPad();">清空</button>
+				<i class="fa fa-paint-brush"></i>
+				<input max="10" min="1" name="pw" type="range" value="2">
+				<input name="pc" type="color" value="#000000">
+				<input type="button" onclick="undo();" value = "返回">
+			</form>
+		</div>
+		<div><canvas id="myCanvas"></canvas></div>
+    </body>
 </html>
