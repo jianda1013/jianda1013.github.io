@@ -63,7 +63,12 @@ function mouseMove(e){
 
 function mouseUp(){
 	this.draw=false;
+	if(points[total_num].length == 1){
+		points.pop();
+		total_num --;
+	}
 	total_num ++;
+	console.log(points);
 }
 
 function undo(){
@@ -77,19 +82,18 @@ function undo(){
 
 function redraw(){
 	clearPad();
-	var canvas=$('#myCanvas');
-	var ctx=canvas.getContext("2d");
-	ctx.beginPath();
 	for(var i = 0; i < points.length; i ++){
+		var canvas=$('#myCanvas');
+		var ctx=canvas.getContext("2d");
+		ctx.beginPath();
 		ctx.moveTo(points[i][0].x, points[i][0].y)
-		ctx.strokeStyle = points[i][0].width;
-		ctx.lineWidth = points[i][0].color;
+		ctx.strokeStyle = points[i][0].color;
+		ctx.lineWidth = points[i][0].width;
 		for(var j = 1; j < points[i].length; j ++){
 			ctx.lineTo(points[i][j].x, points[i][j].y);
 			ctx.stroke();
 		}
 	}
-	console.log(points);
 }
 
 function touchStart(e){
