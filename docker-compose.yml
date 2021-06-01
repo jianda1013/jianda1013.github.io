@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  page:
+    restart: always
+    build: .
+    stdin_open: true
+    volumes:
+      - "./:/usr/app"
+      - "/usr/app/node_modules"
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
